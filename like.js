@@ -73,9 +73,9 @@ function is_class (class_name, e) {
 function pageScroll() {
     // stop page scrolling if there was few new likes in last iteration
     if ( halt || tc > last_tc ) {
-	alert ( "STOP pageScroll: tc=" + tc + "   last_tc=" + last_tc)
+	//alert ( "STOP pageScroll: tc=" + tc + "   last_tc=" + last_tc)
         document.title = tc + ' STOP scrolling ';
-        recall_period = 100; // resume comment clicking within 100 milisec
+        recall_period = 1000; // resume comment clicking within 100 milisec
 	    click_link (comment, recall_period, "comment" );
 	    click_link (more_comment, recall_period, "more_comment" );
             happyFn (happy, recall_period*8);

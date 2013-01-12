@@ -1,3 +1,5 @@
+var speed_s = prompt ("Please enter Like speed (1 is fastest)", "1");
+
 var all_elements          = [],
     happy                 = [],
     comment               = [],
@@ -8,13 +10,15 @@ var all_elements          = [],
     is_comment_empty      = true,
     is_more_comment_empty = true,
     halt                  = false,
-    tc                    = 0;
+    tc                    = 0,
+    speed                 = parseInt ( speed_s );
    
 var happyDiv = document.createElement('div');
 document.getElementsByTagName('body')[0].appendChild(happyDiv);
 
 
-function click_link ( links, period, name ) {
+function click_link ( links, period, name ) 
+{
     document.title = "(" + tc + ") " + links.length + "-" + name;
 
     if ( halt || !links || !links.length ) {
@@ -26,14 +30,11 @@ function click_link ( links, period, name ) {
     links[0].style.fontSize="small";
     links[0].style.color='#00AA00';
     if (links.length > 1) {
-      links[1].style.fontSize="small";
-    	links[1].style.color='#FF0000';
+        links[1].style.fontSize="small";
+        links[1].style.color='#FF0000';
     }
 
-    for ( var i=0; i < 10; i++ ) { 
-        links[0].click();
-	if (name == "comment") break;
-    }
+    links[0].click();
     function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
@@ -61,13 +62,15 @@ function happyFn ( happy, period )
 }
 
 
-function haltFn() {
+function haltFn() 
+{
     halt = true;
     return false; // prevent default event
 }
 
 
-function is_class (class_name, e) {
+function is_class (class_name, e) 
+{
 	if ( typeof all_elements[e].attributes['class'] == "undefined") {
 		value = all_elements[e].getAttribute("class");
 	} else {
@@ -104,22 +107,26 @@ function like_me ()
     
 	var ignore = 0;
         for (var i = 0; i < all_elements.length; i++) {
-            if (all_elements[i] && (all_elements[i].title == 'Like this comment' || all_elements[i].title == 'Like this item')) {
-                happy. push(all_elements[i]);
+	    var e = all_elements[i];
+            if ( e && ( e. title == 'Like this comment' || e. title == 'Like this item') ) {
+                happy. push ( e );
             } else if ( is_class ( "uiLinkButton comment_link", i) ) {
-		if ( clicked_comments. indexOf ( all_elements[i] ) == -1 ) comment. push(all_elements[i]);
+		if ( clicked_comments. indexOf (e) == -1 ) comment. push (e);
             } else if ( is_class ( "UFIPagerLink", i) ) {
-                more_comment. push(all_elements[i]);
+                more_comment. push(e);
             }
         }
-        clicked_comments = comment. slice();
-	more_comment.reverse();
+        for (var i = 0; i < comment.length; i++) {
+            clicked_comments. push ( (comment[i]) );
+        };
+	
+	more_comment. reverse();
 
         happyDiv.innerHTML = '<div id=\'happy\' style=\'background-color:#ddd;font-size:16px;text-align:center;position:fixed;top:40px;right:40px;width:200px;height:100px;border:4px solid black;z-index:9999;padding-top:15px;\'><span>0</span> of '+happy.length+' items liked.<div id=\'happyStatus\' style=\'margin-top:30px;\'><a id=\'happyButton\' href=\'#\' style=\'display:block;\' onclick=\'haltFn();\'>Stop it.</a></div></div>';
 
-	click_link ( comment, 1000, "comment" );
-	click_link ( more_comment, 200, "more_comment" );
-        happyFn ( happy, 800 );
+	click_link ( comment, speed*1000, "comment" );
+	click_link ( more_comment, speed*500, "more_comment" );
+        happyFn ( happy, speed*800 );
 
         try {
     	    UIIntentionalStream.instance.loadOlderPosts();
@@ -128,8 +135,8 @@ function like_me ()
         }
     }
 
-    function_timeout['like_me'] = setTimeout('like_me()', 1000);
+    function_timeout['like_me'] = setTimeout('like_me()', speed*1000);
 }
 
-
 like_me ();
+

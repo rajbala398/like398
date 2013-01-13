@@ -1,4 +1,3 @@
-
 var lastCheck = 0;
 
 function sleepCheck() {
@@ -10,7 +9,7 @@ function sleepCheck() {
         lastCheck = now;
 }
 
-window.onload = function() {
+
         lastCheck = new Date().getTime();
         setInterval(sleepCheck, 1000);
-}
+

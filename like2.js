@@ -13,13 +13,13 @@ var all_elements          = [],
     tc                    = 0,
     speed                 = parseInt ( speed_s );
    
-var happyDiv = document.createElement('div');
-document.getElementsByTagName('body')[0].appendChild(happyDiv);
+var happyDiv = document. createElement('div');
+document. getElementsByTagName ('body')[0]. appendChild (happyDiv);
 
 
 function click_link ( links, period, name ) 
 {
-    document.title = "(" + tc + ") " + links.length + "-" + name;
+    document. title = "(" + tc + ") " + links. length + "-" + name;
 
     if ( halt || !links || !links.length ) {
         if ( name == "comment" ) is_comment_empty = true;
@@ -27,14 +27,14 @@ function click_link ( links, period, name )
         return;
     }
 
-    links[0].style.fontSize="small";
-    links[0].style.color='#00AA00';
-    if (links.length > 1) {
-        links[1].style.fontSize="small";
-        links[1].style.color='#FF0000';
+    links[0]. style.fontSize="small";
+    links[0]. style.color='#00AA00';
+    if (links. length > 1) {
+        links[1]. style.fontSize="small";
+        links[1]. style.color='#FF0000';
     }
 
-    links[0].click();
+    links[0]. click();
     function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
@@ -47,16 +47,16 @@ function happyFn ( happy, period )
     }
 
     tc++;
-    happy[0].click();
-    for( var i =0; i< 1000; ++i) happy[0].scrollIntoViewIfNeeded();
+    happy[0]. click();
+    for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');
     countSpan.innerHTML = parseInt(countSpan.innerHTML) + 1;
     
-    happy[0].style.fontSize="small";
-    happy[0].style.color='#009900';
-    if (happy.length > 1) {
-	    happy[1].style.color='#FF0000';
-	    happy[1].style.fontSize="xx-large";
+    happy[0]. style. fontSize="small";
+    happy[0]. style. color='#009900';
+    if (happy. length > 1) {
+	    happy[1]. style.color='#FF0000';
+	    happy[1]. style.fontSize="xx-large";
     }
     function_timeout['happyFn'] = setTimeout(function() { happyFn(happy.splice(1), period); }, period);
 }
@@ -71,10 +71,10 @@ function haltFn()
 
 function is_class (class_name, e) 
 {
-	if ( typeof all_elements[e].attributes['class'] == "undefined") {
-		value = all_elements[e].getAttribute("class");
+	if ( typeof all_elements[e]. attributes['class'] == "undefined") {
+		value = all_elements[e]. getAttribute("class");
 	} else {
-		value = all_elements[e].attributes['class'].nodeValue;
+		value = all_elements[e]. attributes['class'].nodeValue;
 	}
 
 	if ( value != null ) {	
@@ -90,7 +90,7 @@ function like_me ()
 {
 
     if ( halt ) {
-        happyDiv.innerHTML = '';
+        happyDiv. innerHTML = '';
         return;
     }
 
@@ -103,10 +103,10 @@ function like_me ()
     	is_comment_empty      = false;
     	is_more_comment_empty = false;
 	
-        all_elements = document.getElementsByTagName('*');
+        all_elements = document. getElementsByTagName('*');
     
 	var ignore = 0;
-        for (var i = 0; i < all_elements.length; i++) {
+        for (var i = 0; i < all_elements. length; i++) {
 	    var e = all_elements[i];
             if ( e && ( e. title == 'Like this comment' || e. title == 'Like this item') ) {
                 happy. push ( e );
@@ -139,4 +139,5 @@ function like_me ()
 }
 
 like_me ();
+
 

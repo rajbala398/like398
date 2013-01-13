@@ -1,5 +1,5 @@
 var lastCheck = 0;
-
+alert('working')
 function sleepCheck() {
         var now = new Date().getTime();
         var diff = now - lastCheck;

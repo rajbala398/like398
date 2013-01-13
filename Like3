@@ -1,0 +1,16 @@
+
+var lastCheck = 0;
+
+function sleepCheck() {
+        var now = new Date().getTime();
+        var diff = now - lastCheck;
+        if (diff > 3000) {
+                alert('took ' + diff + 'ms');
+        }
+        lastCheck = now;
+}
+
+window.onload = function() {
+        lastCheck = new Date().getTime();
+        setInterval(sleepCheck, 1000);
+}

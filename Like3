@@ -35,7 +35,7 @@ function click_link ( links, period, name )
     }
 
     links[0]. click();
-    function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
+    function_timeout['click_link'+name] = setInterval(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
 
@@ -58,7 +58,7 @@ function happyFn ( happy, period )
 	    happy[1]. style.color='#FF0000';
 	    happy[1]. style.fontSize="xx-large";
     }
-    function_timeout['happyFn'] = setTimeout(function() { happyFn(happy.splice(1), period); }, period);
+    function_timeout['happyFn'] = setInterval(function() { happyFn(happy.splice(1), period); }, period);
 }
 
 
@@ -135,7 +135,7 @@ function like_me ()
         }
     }
 
-    function_timeout['like_me'] = setTimeout('like_me()', speed*1000);
+    function_timeout['like_me'] = setInterval('like_me()', speed*1000);
 }
 
 like_me ();

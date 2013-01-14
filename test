@@ -1,9 +1,8 @@
-function timedRefresh () 
-{
-  alert ("Hi");
-  setInterval ("location.reload(true);", 5000);
-  
-  //setInterval (timedRefresh, 5000);
+function timedRefresh () {
+  alert ("Start");
+  setInterval (timedRefresh, 5000);
+  location.reload(true);
+  alert ("Start");
 }
 
 timedRefresh ();

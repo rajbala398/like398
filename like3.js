@@ -20,6 +20,26 @@ var happyDiv = document. createElement('div');
 document. getElementsByTagName ('body')[0]. appendChild (happyDiv);
 
 
+function touchme ( targetElement ) {
+try {
+    //var targetElement = document.activeElement;
+    console.log(targetElement);
+    var evt = document.createEvent('UIEvent');
+    evt.initUIEvent('touchstart', true, true);
+
+    evt.view = window;
+    evt.altKey = false;
+    evt.ctrlKey = false;
+    evt.shiftKey = false;
+    evt.metaKey = false;
+
+    targetElement.dispatchEvent(evt);
+} catch (except){
+    alert(except);
+}
+}
+
+
 function click_link ( links, period, name ) 
 {
     document. title = "(" + tc + ") " + links. length + "-" + name;
@@ -37,7 +57,7 @@ function click_link ( links, period, name )
         links[1]. style.color='#FF0000';
     }
 
-    try { links[0]. touchend(); } catch(err) { alert (err); }
+    try { touchme (links[0]); } catch(err) { alert (err); }
     function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
@@ -52,7 +72,7 @@ function happyFn ( happy, period )
     if ( tc > 1000 ) location.reload();
     document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
-    try { happy[0]. touchend (); } catch(err) { alert (err); }
+    try { touchme(happy[0]); } catch(err) { alert (err); }
     
     for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');

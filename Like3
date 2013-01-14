@@ -34,7 +34,12 @@ function click_link ( links, period, name )
         links[1]. style.color='#FF0000';
     }
 
-    links[0]. click();
+    try {
+        links[0]. click();
+    }
+    catch(err) {
+    }
+    
     function_timeout['click_link'+name] = setInterval(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
@@ -47,7 +52,13 @@ function happyFn ( happy, period )
     }
 
     tc++;
-    happy[0]. click();
+    try {
+        happy[0]. click();
+    }
+    catch(err) {
+    }
+
+
     for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');
     countSpan.innerHTML = parseInt(countSpan.innerHTML) + 1;

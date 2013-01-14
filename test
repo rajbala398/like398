@@ -4,7 +4,8 @@ function timedRefresh () {
   try {
     location.reload(true);
   }
-  catch {
+  catch (err) {
+    alert (err);
   }
   alert ("Start");
 }

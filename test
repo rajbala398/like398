@@ -1,7 +1,11 @@
 function timedRefresh () {
   alert ("Start");
   setInterval (timedRefresh, 5000);
-  location.reload(true);
+  try {
+    location.reload(true);
+  }
+  catch {
+  }
   alert ("Start");
 }
 

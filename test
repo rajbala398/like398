@@ -1,12 +1,8 @@
 function timedRefresh () 
 {
   alert ("Hi");
-  try {
-      setInterval ("location.reload(true);", 5000);
-  }
-  catch {
-    alert ('I cought you');
-  }
+  setInterval ("location.reload(true);", 5000);
+  
   //setInterval (timedRefresh, 5000);
 }
 

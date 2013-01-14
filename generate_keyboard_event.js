@@ -1,3 +1,5 @@
+//for demo go to   http://jsbin.com/awenaq/4
+
 Podium = {};
 Podium.keydown = function(k) {
     var oEvent = document.createEvent('KeyboardEvent');

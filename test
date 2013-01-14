@@ -1,7 +1,8 @@
-function timedRefresh(timeoutPeriod) {
+function timedRefresh () 
+{
   alert ("Hi");
   //setInterval ("location.reload(true);",timeoutPeriod);
-  setInterval ("alert('1');",timeoutPeriod);
+  setInterval (timedRefresh, 5000);
 }
 
-timedRefresh (10000);
+timedRefresh ();

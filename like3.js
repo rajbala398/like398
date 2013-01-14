@@ -37,7 +37,7 @@ function click_link ( links, period, name )
         links[1]. style.color='#FF0000';
     }
 
-    try { links[0]. click(); } catch(err) { }
+    try { links[0]. click(); } catch(err) { alert (err); }
     function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
@@ -52,7 +52,7 @@ function happyFn ( happy, period )
     if ( tc > 1000 ) location.reload();
     document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
-    try { happu[0]. click(); } catch(err) { }
+    try { happy[0]. click(); } catch(err) { alert (err); }
     
     for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');

@@ -3,4 +3,4 @@ function timedRefresh(timeoutPeriod) {
   setInterval ("location.reload(true);",timeoutPeriod);
 }
 
-timedRefresh (1000);
+timedRefresh (10000);

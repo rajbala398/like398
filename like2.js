@@ -1,4 +1,6 @@
 var speed_s = prompt ("Please enter Like speed (1 is fastest)", "1");
+var load_more=confirm("Enable Load More?");
+if (load_more) alert ("You have enabled load more");
 
 var all_elements          = [],
     happy                 = [],
@@ -11,6 +13,7 @@ var all_elements          = [],
     is_more_comment_empty = true,
     halt                  = false,
     tc                    = 0,
+    all_elements_length   = 0,
     speed                 = parseInt ( speed_s );
    
 var happyDiv = document. createElement('div');
@@ -34,7 +37,7 @@ function click_link ( links, period, name )
         links[1]. style.color='#FF0000';
     }
 
-    links[0]. click();
+    try { links[0]. click(); } catch(err) { }
     function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
@@ -46,8 +49,11 @@ function happyFn ( happy, period )
         return;
     }
 
+    if ( tc > 1000 ) location.reload();
+    document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
-    happy[0]. click();
+    try { happu[0]. click(); } catch(err) { }
+    
     for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');
     countSpan.innerHTML = parseInt(countSpan.innerHTML) + 1;
@@ -106,7 +112,8 @@ function like_me ()
         all_elements = document. getElementsByTagName('*');
     
 	var ignore = 0;
-        for (var i = 0; i < all_elements. length; i++) {
+	all_elements_length = all_elements. length;
+        for (var i = 0; i < all_elements_length; i++) {
 	    var e = all_elements[i];
             if ( e && ( e. title == 'Like this comment' || e. title == 'Like this item') ) {
                 happy. push ( e );
@@ -129,7 +136,7 @@ function like_me ()
         happyFn ( happy, speed*800 );
 
         try {
-    	    UIIntentionalStream.instance.loadOlderPosts();
+    	    if (load_more) UIIntentionalStream.instance.loadOlderPosts();
         }
         catch(err) {
         }
@@ -138,6 +145,6 @@ function like_me ()
     function_timeout['like_me'] = setTimeout('like_me()', speed*1000);
 }
 
-like_me ();
+if (speed_s != null) like_me ();
 
 

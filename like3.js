@@ -24,7 +24,7 @@ function touchme ( targetElement ) {
 try {
     //var targetElement = document.activeElement;
     console.log(targetElement);
-    var evt = document.createEvent('UIEvent');
+    var evt = document.createEvent('TouchEvent');
     evt.initUIEvent('touchstart', true, true);
 
     evt.view = window;

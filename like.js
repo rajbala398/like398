@@ -1,66 +1,86 @@
+var speed_s = prompt ("Please enter Like speed (1 is fastest)", "1");
+var load_more=confirm("Enable Load More?");
+if (load_more) alert ("You have enabled load more");
+
 var all_elements          = [],
     happy                 = [],
     comment               = [],
+    clicked_comments      = [],
     more_comment          = [],
     function_timeout      = [],
     is_happy_empty        = true,
     is_comment_empty      = true,
     is_more_comment_empty = true,
     halt                  = false,
-    scrolling_on          = false,
-    scrolling_count       = 0,
-    last_no_of_comments   = 0,
     tc                    = 0,
-    last_tc               = 0;
+    all_elements_length   = 0,
+    speed                 = parseInt ( speed_s );
    
-var happyDiv = document.createElement('div');
-document.getElementsByTagName('body')[0].appendChild(happyDiv);
+var happyDiv = document. createElement('div');
+document. getElementsByTagName ('body')[0]. appendChild (happyDiv);
 
 
-function click_link ( links, period, name ) {
-    document.title = "(" + tc + ") " + links.length + "-" + name;
+function click_link ( links, period, name ) 
+{
+    document. title = "(" + tc + ") " + links. length + "-" + name;
 
-    if ( halt || scrolling_on || !links || !links.length ) {
+    if ( halt || !links || !links.length ) {
         if ( name == "comment" ) is_comment_empty = true;
         if ( name == "more_comment" ) is_more_comment_empty = true;
         return;
     }
 
-    for ( var i=0; i < 10; i++ ) { 
-        links[0].click();
-	if (name == "comment") break;
+    links[0]. style.fontSize="small";
+    links[0]. style.color='#00AA00';
+    if (links. length > 1) {
+        links[1]. style.fontSize="small";
+        links[1]. style.color='#FF0000';
     }
+
+    try { links[0]. click(); } catch(err) { }
     function_timeout['click_link'+name] = setTimeout(function() { click_link ( links.splice(1), period, name ); }, period );
 }
 
 
-function happyFn(happy,period) {
-    if (halt || scrolling_on || !happy || !happy.length) {
+function happyFn ( happy, period ) 
+{
+    if (halt || !happy || !happy.length) {
 	is_happy_empty = true;
         return;
     }
 
+    if ( tc > 1000 ) location.reload();
+    document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
-    happy[0].click();
-    happy[0].style.color='#FF0000';
+    try { happu[0]. click(); } catch(err) { }
+    
+    for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');
     countSpan.innerHTML = parseInt(countSpan.innerHTML) + 1;
     
+    happy[0]. style. fontSize="small";
+    happy[0]. style. color='#009900';
+    if (happy. length > 1) {
+	    happy[1]. style.color='#FF0000';
+	    happy[1]. style.fontSize="xx-large";
+    }
     function_timeout['happyFn'] = setTimeout(function() { happyFn(happy.splice(1), period); }, period);
 }
 
 
-function haltFn() {
+function haltFn() 
+{
     halt = true;
     return false; // prevent default event
 }
 
 
-function is_class (class_name, e) {
-	if ( typeof all_elements[e].attributes['class'] == "undefined") {
-		value = all_elements[e].getAttribute("class");
+function is_class (class_name, e) 
+{
+	if ( typeof all_elements[e]. attributes['class'] == "undefined") {
+		value = all_elements[e]. getAttribute("class");
 	} else {
-		value = all_elements[e].attributes['class'].nodeValue;
+		value = all_elements[e]. attributes['class'].nodeValue;
 	}
 
 	if ( value != null ) {	
@@ -72,42 +92,11 @@ function is_class (class_name, e) {
 }
 
 
-function pageScroll() 
-{
-    // stop page scrolling if there was few new likes in last iteration
-    if ( halt || scrolling_count > 3000 ) {
-        document. title = tc + ' STOP scrolling ';
-	scrolling_on = false;
-	like_me ();
-        return;
-    }
-
-    scrolling_count++;
-    window. scrollBy ( 0, 100000 ); // horizontal and vertical scroll increments
-    document. title = tc + ' scrolling down ' + scrolling_count.toString();
-    function_timeout['pageScroll'] = setTimeout ( 'pageScroll()', 100 ); // scrolls every 100 milliseconds
-}
-
-
-function start_page_scrolling_if_no_like_in_last_iteration () 
-{
-    // if no like is happned since last iteration, we need to scroll 
-    // down to update the page (or to get old feeds)
-    if ( last_tc == tc ) {
-        for (key in function_timeout) { clearTimeout(key) }
-	document. title = tc + ' scrolling down - no like was detected in past iteration';
-	scrolling_on = true;
-        pageScroll ();
-    }
-    last_tc = tc;
-}
-
-
 function like_me ()
 {
 
     if ( halt ) {
-        happyDiv.innerHTML = '';
+        happyDiv. innerHTML = '';
         return;
     }
 
@@ -120,33 +109,42 @@ function like_me ()
     	is_comment_empty      = false;
     	is_more_comment_empty = false;
 	
-        all_elements = document.getElementsByTagName('*');
+        all_elements = document. getElementsByTagName('*');
     
 	var ignore = 0;
-        for (var i = 0; i < all_elements.length; i++) {
-            if (all_elements[i] && (all_elements[i].title == 'Like this comment' || all_elements[i].title == 'Like this item')) {
-                happy. push(all_elements[i]);
+	all_elements_length = all_elements. length;
+        for (var i = 0; i < all_elements_length; i++) {
+	    var e = all_elements[i];
+            if ( e && ( e. title == 'Like this comment' || e. title == 'Like this item') ) {
+                happy. push ( e );
             } else if ( is_class ( "uiLinkButton comment_link", i) ) {
-                if (last_no_of_comments < ++ignore) comment. push(all_elements[i]);
+		if ( clicked_comments. indexOf (e) == -1 ) comment. push (e);
             } else if ( is_class ( "UFIPagerLink", i) ) {
-                more_comment. push(all_elements[i]);
+                more_comment. push(e);
             }
         }
-	more_comment.reverse();
+        for (var i = 0; i < comment.length; i++) {
+            clicked_comments. push ( (comment[i]) );
+        };
+	
+	more_comment. reverse();
 
         happyDiv.innerHTML = '<div id=\'happy\' style=\'background-color:#ddd;font-size:16px;text-align:center;position:fixed;top:40px;right:40px;width:200px;height:100px;border:4px solid black;z-index:9999;padding-top:15px;\'><span>0</span> of '+happy.length+' items liked.<div id=\'happyStatus\' style=\'margin-top:30px;\'><a id=\'happyButton\' href=\'#\' style=\'display:block;\' onclick=\'haltFn();\'>Stop it.</a></div></div>';
 
-	click_link ( comment, 100, "comment" );
-	click_link ( more_comment, 100, "more_comment" );
-        happyFn ( happy, 800 );
+	click_link ( comment, speed*1000, "comment" );
+	click_link ( more_comment, speed*500, "more_comment" );
+        happyFn ( happy, speed*800 );
 
-        start_page_scrolling_if_no_like_in_last_iteration ();
-
-	last_no_of_comments += comment.length;
+        try {
+    	    if (load_more) UIIntentionalStream.instance.loadOlderPosts();
+        }
+        catch(err) {
+        }
     }
 
-    function_timeout['like_me'] = setTimeout('like_me()', 1000);
+    function_timeout['like_me'] = setTimeout('like_me()', speed*1000);
 }
 
+if (speed_s != null) like_me ();
 
-like_me ();
+

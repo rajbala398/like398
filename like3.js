@@ -89,7 +89,8 @@ function happyFn ( happy, period )
     if ( tc > 1000 ) location.reload();
     document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
-    try { touchmestart(happy[0]); touchmeend(happy[0]); happy[0]. click(); } catch(err) {  }
+    var el = happy[0];
+    try { touchmestart(el); touchmeend(el); el. click(); el. touch() } catch(err) {  }
     
     for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');

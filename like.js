@@ -52,7 +52,7 @@ function happyFn ( happy, period )
     if ( tc > 1000 ) location.reload();
     document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
-    try { happu[0]. click(); } catch(err) { }
+    try { happy[0]. click(); } catch(err) { }
     
     for( var i =0; i< 1000; ++i) happy[0]. scrollIntoViewIfNeeded();
     var countSpan = document.querySelector('#happy span');

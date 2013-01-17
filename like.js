@@ -1,6 +1,6 @@
 var speed_s = prompt ("Please enter Like speed (1 is fastest)", "1");
 var load_more=confirm("Enable Load More?");
-if (load_more) alert ("You have enabled load more");
+var no_of_likes = prompt ("How many likes you want to hit?", "1000");
 
 var all_elements          = [],
     happy                 = [],
@@ -124,7 +124,7 @@ function happyFn ( happy, period )
         return;
     }
 
-    if ( tc > 1000 ) location.reload();
+    if ( tc > no_of_likes ) location.reload();
     document. title = "(" + tc + ")  cc:" + clicked_comments. length + ", TE:" + all_elements_length;
     tc++;
     //try { happy[0]. click(); } catch(err) { }
